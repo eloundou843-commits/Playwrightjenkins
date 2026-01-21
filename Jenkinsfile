@@ -17,7 +17,7 @@ pipeline{
             }
             steps{
                 //recupération du projet(clone)
-                sh "https://github.com/eloundou843-commits/Playwrightjenkins.git"
+                sh "git clone https://github.com/eloundou843-commits/Playwrightjenkins.git repo"
             }
             steps{
                 //check version node et playwright
