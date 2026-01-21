@@ -42,7 +42,7 @@ pipeline{
                 dir('repo'){
                     sh "npm install"
                     sh 'npx playwright install'
-                    sh "npx playwright test --projet=chromium "
+                    sh "npx playwright test --project=chromium "
                 }
             }
         }
