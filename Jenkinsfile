@@ -9,8 +9,8 @@ pipeline{
         }
     }
 
-    satges{
-        satge("demarrage de configuration de projet"){
+    stages{
+        stage("demarrage de configuration de projet"){
             steps{
                 //creer une commande pour suprimer le repo
                 sh "rm -rf repo"
