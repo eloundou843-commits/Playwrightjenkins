@@ -39,6 +39,8 @@ pipeline{
                 sh "rm -rf repo"
                 //recupération du projet(clone)
                 sh "git clone https://github.com/eloundou843-commits/Playwrightjenkins.git repo"
+                sh "npm ci"
+                sh "npx playwright --version"
             }
         }
         // stage("clone du projet"){
@@ -71,13 +73,16 @@ pipeline{
     }
 
     post{
-                        script {
+
+        always{
+               script {
                         if(params.Tags == "@smoke"){
-                            sh "npx playwright test --grep '@smoke'"
+                            sh "npx playwright test --grep '@smoke' --project=chromium"
                             build job:'job_git2'
                         }
                     }
                     }
+    }
 }
 
 
