@@ -63,7 +63,10 @@ pipeline{
                     //sh "npx playwright test --project=chromium "
                     script {
                         if(params.navigateur == "chromium" && params.Tags == "@smoke"){
-                            sh "npx playwright test --project=chromium --grep ${params.Tags}"
+                
+                            sh "npx playwright test --project=chromium --grep ${params.Tags} --reporter=allure-playwright"
+                            //génère un dossier allure temporaire
+                            stash name: 'allure-results', includes: 'allure-results/*'
                         }
                     }
                     
@@ -76,10 +79,16 @@ pipeline{
 
     post{
 
-        success{
+        always{
                script {
                         if(params.Tags == "@smoke"){
-                            build job:'job_git2'
+                            //build job:'job_git2'
+                            sh 'rm -rf allure-results/*'
+                            unstash 'allure-results'
+                            archiveArtifacts 'allure-results/*'
+                            allure includeProperties: false,
+                                jdk: '',
+                                results: [[path: 'allure-results/']]
                         }
                     }
                     }
