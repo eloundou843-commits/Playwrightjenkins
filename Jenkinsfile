@@ -13,7 +13,7 @@ pipeline{
     //         defaultvalure
     // }
     parameters{
-        choice(name:'navigateur', choices:['chromium', 'webkit', 'firefox'], defaultValue:'chromium',description:'navigateur choisi')
+        choice(name:'navigateur', choices:['chromium', 'webkit', 'firefox'],description:'navigateur choisi')
     }
 
     stages{
