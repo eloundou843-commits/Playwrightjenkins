@@ -15,10 +15,11 @@ pipeline{
     //         defaultvalure
     // }
     //parameters{
-      //  choice(name:'navigateur', choices:['chromium', 'webkit', 'firefox'],description:'navigateur choisi')
+      // choice(name:'navigateur', choices:['chromium', 'webkit', 'firefox'],description:'navigateur choisi')
     //}
     parameters {
         choice( name:'Tags', choices:['@smoke','@tnr'])
+        choice( name:'navigateur', choices:["chromium", "webkit", "firefox"])
         
     }
 
@@ -39,8 +40,7 @@ pipeline{
                 sh "rm -rf repo"
                 //recupération du projet(clone)
                 sh "git clone https://github.com/eloundou843-commits/Playwrightjenkins.git repo"
-                sh "npm ci"
-                sh "npx playwright --version"
+               
             }
         }
         // stage("clone du projet"){
@@ -55,15 +55,17 @@ pipeline{
               steps{
                 //accéder au dossier repo avec la commande dir
                 dir('repo'){
-                    sh "npm install"
-                    sh 'npx playwright install'
+                    sh "npm ci"
+                    sh "npx playwright --version"
+                    //sh "npm install"
+                    //sh 'npx playwright install'
                     //on peut remplacé les 2 ligne pécédente par sh 'npm ci'(permet de nétoyer et faire l'installation)
                     //sh "npx playwright test --project=chromium "
-                    //script {
-                        //if(params.navigateur == "chromium"){
-                            //sh "npx playwright test --project=chromium"
-                        //}
-                    //}
+                    script {
+                        if(params.navigateur == "chromium" && params.Tags == "@smoke"){
+                            sh "npx playwright test --project=chromium --grep ${params.Tags}"
+                        }
+                    }
                     
                 }
             }
@@ -74,10 +76,9 @@ pipeline{
 
     post{
 
-        always{
+        success{
                script {
                         if(params.Tags == "@smoke"){
-                            sh "npx playwright test --grep '@smoke' --project=chromium"
                             build job:'job_git2'
                         }
                     }
