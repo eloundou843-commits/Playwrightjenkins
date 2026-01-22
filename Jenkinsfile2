@@ -17,10 +17,7 @@ pipeline{
     //parameters{
      //  choice(name:'navigateur', choices:['chromium', 'webkit', 'firefox'],description:'navigateur choisi')
     //}
-    parameters {
-        choice( name:'Tags', choices:['@valide','@tnr'])
-        
-    }
+    
     
 
     stages{
@@ -37,7 +34,7 @@ pipeline{
                 //installation de git
                 //sh 'apt-get update && apt-get install -y git'
                 //creer une commande pour suprimer le repo
-                sh "rm -rf repo"
+                sh "rm -rf repo2"
                 //recupération du projet(clone)
                 sh "git clone https://github.com/eloundou843-commits/Playwrightjenkins.git repo2"
             }
@@ -53,7 +50,7 @@ pipeline{
         stage("accéder au dossier repo avec la commande dir"){
               steps{
                 //accéder au dossier repo avec la commande dir
-                dir('repo'){
+                dir('repo2'){
                     sh "npm install"
                     sh 'npx playwright install'
                     //on peut remplacé les 2 ligne pécédente par sh 'npm ci'(permet de nétoyer et faire l'installation)
