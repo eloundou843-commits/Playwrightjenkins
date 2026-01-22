@@ -9,6 +9,13 @@ pipeline{
         }
     }
 
+    // parameters{ choice =("navigateur", choice=["chromium", "webkit", "firefox"]) 
+    //         defaultvalure
+    // }
+    parameters{
+        choice(name:"navigateur", choices:["chromium", "webkit", "firefox"],defaultValue:"chromium",description:"navigateur choisi")
+    }
+
     stages{
 
         stage("check version node et playwright"){
@@ -42,10 +49,17 @@ pipeline{
                 dir('repo'){
                     sh "npm install"
                     sh 'npx playwright install'
-                    sh "npx playwright test --project=chromium "
+                    //on peut remplacé les 2 ligne pécédente par sh 'npm ci'(permet de nétoyer et faire l'installation)
+                    //sh "npx playwright test --project=chromium "
+                    script {
+                        if(params.navigateur == "chromium"){
+                            sh "npx playwright test --project=chromium"
+                        }
+                    }
                 }
             }
         }
+
             
     }
 }
