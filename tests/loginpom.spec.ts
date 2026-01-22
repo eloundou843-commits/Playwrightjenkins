@@ -24,7 +24,7 @@ test("login valid", { tag: "@valid" }, async ({ page }) => {
 
 });
 
-test("login invalid", { tag: "@test" }, async ({ page }) => {
+test("login invalid", { tag: "@tnr" }, async ({ page }) => {
     await loginPage.setUsername("standard_use");
     await loginPage.setPassword("secret_sauc");
     await loginPage.loginBtn();
