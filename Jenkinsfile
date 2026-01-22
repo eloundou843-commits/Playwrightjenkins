@@ -3,7 +3,8 @@ pipeline{
     agent {
         docker {
             //recupérer l'image
-            image 'playwright/chromium:playwright-1.56.1'
+            //image 'playwright/chromium:playwright-1.56.1'
+            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
             //donner la permission
             args '--user=root --entrypoint=""'
         }
@@ -28,7 +29,7 @@ pipeline{
         stage("demarrage de configuration de projet et clone du projet"){
             steps{
                 //installation de git
-                sh 'apt-get update && apt-get install -y git'
+                //sh 'apt-get update && apt-get install -y git'
                 //creer une commande pour suprimer le repo
                 sh "rm -rf repo"
                 //recupération du projet(clone)
